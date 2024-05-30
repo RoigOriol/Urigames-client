@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const service = axios.create({
-  baseURL: `http://localhost:5005/api` // la base de todas las llamadas al backend
+  baseURL: `http://localhost:5005/api` // la base de todas las llamadas al backend con el /api
 })
 
 // nos permite interceptar la llamada justa antes de salir (de client a servder) para añadirle el token
@@ -18,4 +18,4 @@ service.interceptors.request.use((config) => {
 })
 
 export default service
-// !de ahora en adelante, todas la llamadas que hagamos al server serán con este objeto de service
+// !de ahora en adelante, todas la llamadas que hagamos al server serán con este objeto de service 

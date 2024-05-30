@@ -9,6 +9,11 @@ import Home from "./pages/Home"
 import Login from "./pages/auth/Login"
 import Signup from "./pages/auth/Signup";
 import { Container } from "react-bootstrap";
+import OnlyPrivate
+from "./components/OnlyPrivate";
+import PrivatePage from "./pages/PrivatePage";
+
+
 
 function App() {
   return (
@@ -28,6 +33,8 @@ function App() {
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/not-found" element={<NotFoundPage />} />
+          <Route path="/private-page-example" element={ <OnlyPrivate> <PrivatePage /> </OnlyPrivate> } />
+ 
 
 
         </Routes>

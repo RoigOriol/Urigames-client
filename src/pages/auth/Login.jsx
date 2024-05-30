@@ -4,67 +4,97 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/auth.context";
+import service from "../../services/config.services";
+import MyNavbar from '../../components/MyNavbar';
 
-function Signup() {
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+function Login() {
+
+  const { authenticateUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const userCredentials = {
+      email: email,
+      password: password
+    };
+
+    try {
+      const response = await service.post("/auth/login", userCredentials); // ya no utlizamos axios pk llmamos al service
+      console.log(response);
+
+      // almacenamos el token en localstorage
+      localStorage.setItem("authToken", response.data.authToken);
+
+      // validamos el token y actualizamos los estados
+      authenticateUser();
+
+      // redireccionar a una pagina privada
+      navigate("/private-page-example");
+
+    } catch (error) {
+      console.log(error);
+      if (error.response && error.response.status === 400) {
+        setErrorMessage(error.response.data.errorMessage);
+      }
+      // aquí debería ir navegación a una página de error
     }
   };
 
   return (
-    <Form noValidate onSubmit={handleSubmit}>
-      <Row className="mb-3">
-        <Form.Group as={Col} md="4" controlId="validationCustom01">
-          <Form.Label>First name</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="First name"
-            defaultValue=""
-          />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} md="4" controlId="validationCustom02">
-          <Form.Label>Last name</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Last name"
-            defaultValue=""
-          />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-          <Form.Label>Username</Form.Label>
-          <InputGroup hasValidation>
-            <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-            <Form.Control
-              type="text"
-              placeholder="Username"
-              aria-describedby="inputGroupPrepend"
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              Please choose a username.
-            </Form.Control.Feedback>
-          </InputGroup>
-        </Form.Group>
-      </Row>
-      <Row className="mb-3">
-        <Form.Group as={Col} md="6" controlId="validationCustom03">
-          <Form.Label>City</Form.Label>
-          <Form.Control type="text" placeholder="City" required />
-          <Form.Control.Feedback type="invalid">
-            Please provide a valid city.
-          </Form.Control.Feedback>
-        </Form.Group>
-      </Row>
-      <Button type="submit">Login</Button>
-    </Form>
+    <div>
+    
+     
+
+      
+   
+    <div>
+
+      
+      <h1>Formulario de Acceso</h1>
+
+      <form onSubmit={handleLogin}>
+        <label>Correo Electrónico:</label>
+        <input
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleEmailChange}
+        />
+
+        <br />
+
+        <label>Contraseña:</label>
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={handlePasswordChange}
+        />
+
+        <br />
+
+        <button type="submit">Acceder</button>
+
+        {errorMessage && <p>{errorMessage}</p>}
+
+      </form>
+    </div>
+    
+    </div>
   );
 }
 
-export default Signup;
+export default Login;
