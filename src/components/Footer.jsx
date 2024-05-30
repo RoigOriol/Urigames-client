@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import github from "../assets/images/logotipo-de-github.png"
-
+import about from "../assets/images/about-logo.png"
 
 
 
@@ -12,7 +12,7 @@ function Footer() {
       <img src={github} alt="GitHub" className="footer-image-left" />
     </Link>
     <Link to="/AboutPage">
-      <p>About</p>
+    <img src={about} alt="Abaout" className="footer-image-left" />
         </Link>
   </div>
   )

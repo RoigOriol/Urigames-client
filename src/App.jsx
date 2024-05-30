@@ -6,6 +6,8 @@ import Footer from "./components/Footer";
 import MyNavbar from "./components/MyNavbar";
 import AboutPage from "./pages/AboutPage"
 import Home from "./pages/Home"
+import Login from "./pages/auth/Login"
+import Signup from "./pages/auth/Signup";
 import { Container } from "react-bootstrap";
 
 function App() {
@@ -14,10 +16,19 @@ function App() {
       <MyNavbar />
      
         <Routes>
+         <Route path="/"element ={<Home />}/>
+         <Route path="/login" element={<Login />} />
+         <Route path="/signup" element={<Signup />} />
+
+
+
+
+
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/"element ={<Home />}/>
+          <Route path="/not-found" element={<NotFoundPage />} />
+
 
         </Routes>
         <Footer />
