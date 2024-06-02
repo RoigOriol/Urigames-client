@@ -35,45 +35,49 @@ function Signup() {
   };
 
   return (
-    <div className="container mt-5">
-      <h5>Formulario de Registro</h5>
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-      <Form noValidate onSubmit={handleSignup}>
-        <Row className="mb-3">
-          <Form.Group as={Col} md="4">
-            <Form.Label>Nombre de usuario</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Nombre de usuario"
-              onChange={handleUsernameChange}
-            />
-          </Form.Group>
-          <Form.Group as={Col} md="4">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control
-              required
-              type="password"
-              placeholder="Contraseña"
-              onChange={handlePasswordChange}
-            />
-          </Form.Group>
-          <Form.Group as={Col} md="4">
-            <Form.Label>Correo Electrónico</Form.Label>
-            <InputGroup hasValidation>
-              <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+    <div className="registration-form-container">
+      <div className="container mt-5">
+        <h5>Formulario de Registro</h5>
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+        <Form noValidate onSubmit={handleSignup}>
+          <Row className="mb-3">
+            <Form.Group as={Col} md="4">
+              <Form.Label>Nombre de usuario</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="Correo Electrónico"
-                aria-describedby="inputGroupPrepend"
                 required
-                onChange={handleEmailChange}
+                type="text"
+                placeholder="Nombre de usuario"
+                onChange={handleUsernameChange}
               />
-            </InputGroup>
-          </Form.Group>
-        </Row>
-        <Button type="submit">Registrarse</Button>
-      </Form>
+            </Form.Group>
+            <Form.Group as={Col} md="4">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control
+                required
+                type="password"
+                placeholder="Contraseña"
+                onChange={handlePasswordChange}
+              />
+            </Form.Group>
+            <Form.Group as={Col} md="4">
+              <Form.Label>Correo Electrónico</Form.Label>
+              <InputGroup hasValidation>
+                <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+                <Form.Control
+                  type="email"
+                  placeholder="Correo Electrónico"
+                  aria-describedby="inputGroupPrepend"
+                  required
+                  onChange={handleEmailChange}
+                />
+              </InputGroup>
+            </Form.Group>
+          </Row>
+          <Button variant="secondary" type="submit">
+            Registrarse
+          </Button>
+        </Form>
+      </div>
     </div>
   );
 }

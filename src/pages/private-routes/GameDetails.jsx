@@ -3,6 +3,7 @@ import { Routes, Route, useParams } from "react-router-dom";
 import service from "../../services/config.services";
 
 function GameDetails() {
+  //tenemos que coegher use params para obtener la id del juego específico
   const { id } = useParams();
   const [gameDetails, setGameDetails] = useState({});
 
@@ -21,7 +22,13 @@ function GameDetails() {
     <>
       //!poner boton volver
       <div>GamesDetails</div>
-      <p>id:{gameDetails.title}</p>
+      <p>{game.image}</p>
+      <h2>{game.title}</h2>
+      <p>{game.description}</p>
+      <p>{game.designer}</p>
+      <p>{game.minPlayers}</p>
+      <p>{game.maxPlayers}</p>
+      <p>{game.playTime}</p>
     </>
   );
 }

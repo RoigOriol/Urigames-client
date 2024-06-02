@@ -2,22 +2,26 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  
-  color:#242424;
-  background-color: whitesmoke;
-
+  color: #242424;
+  background-color: #6c757d;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #6c757d;
 }
 .footer {
   position: fixed;
   bottom: 0;
   width: 100%;
   height: 60px;
-  background-color: rgb(137, 134, 134);
+  background-color: #6c757d;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,4 +39,15 @@
 
 .footer-image-right {
   margin-right: 20px;
+}
+
+.bg-body-tertiary {
+  background-color: #6c757d;
+}
+
+.registration-form-container {
+  background-color: #6c757d;
+}
+.bg-body-tertiary {
+  background-color: #6c757d;
 }

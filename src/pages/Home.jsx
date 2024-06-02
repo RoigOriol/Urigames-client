@@ -1,10 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/images/logo-page.png";
 
 function Home() {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="home-container">
+      <Link to="/games">
+        <img src={logo} alt="logo" className="img-fluid" />
+      </Link>
     </div>
   );
 }
