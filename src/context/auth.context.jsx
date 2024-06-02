@@ -1,6 +1,7 @@
 //import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import service from "../services/config.services";
+import { Spinner } from "react-bootstrap/esm";
 
 // componente que comparte el contexto
 const AuthContext = createContext();
@@ -70,8 +71,11 @@ function AuthWrapper(props) {
   }, []);
 
   if (isAuthenticating === true) {
-    //! esto podría ser un spinner o animación bien chula
-    return <h3>... authenticando usuario</h3>;
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
   }
 
   // aplicación envuelta en todo contexto

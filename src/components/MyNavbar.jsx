@@ -7,11 +7,18 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import logo from "../assets/images/logo-page.png";
 import { AuthContext } from "../context/auth.context";
+import { themeContext } from "../context/theme.context";
 
 function MyNavbar() {
   const { authenticateUser, isLoggedIn, isAdmin, loggedUserId } =
     useContext(AuthContext);
   const navigate = useNavigate();
+
+  const { isDarkTheme, handleToggleTheme } = useContext(themeContext);
+
+  const handleSwitch = () => {
+    handleToggleTheme();
+  };
 
   const handleLogout = async () => {
     // 1. Remover el token de localstorage
@@ -25,7 +32,12 @@ function MyNavbar() {
   };
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar
+      expand="lg"
+      bg={isDarkTheme ? "dark" : "light"}
+      data-bs-theme={isDarkTheme ? "dark" : "light"}
+      className="bg-body-tertiary"
+    >
       <Container fluid className="bg-body-tertiary">
         <Navbar.Brand as={Link} to="/">
           <img src={logo} alt="logo" width={80} />
@@ -73,6 +85,17 @@ function MyNavbar() {
           </Nav>
         </Navbar.Collapse>
       </Container>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        ☀️
+        <Form.Check type="switch" onClick={handleSwitch} />
+        🌙
+      </div>
     </Navbar>
   );
 }

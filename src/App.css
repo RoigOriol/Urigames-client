@@ -9,6 +9,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.darkTheme {
+  background-color: #6c757d;
+  color: whitesmoke;
+  transition: all 0.5s;
+}
+.lightTheme {
+  background-color: whitesmoke;
+  transition: all 0.5s;
+  color: #6c757d;
+}
 .home-container {
   display: flex;
   justify-content: center;
@@ -42,12 +52,9 @@
 }
 
 .bg-body-tertiary {
-  background-color: #6c757d;
+  background-color: whitesmoke;
 }
 
 .registration-form-container {
-  background-color: #6c757d;
-}
-.bg-body-tertiary {
-  background-color: #6c757d;
+  background-color: whitesmoke;
 }

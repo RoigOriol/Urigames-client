@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useParams } from "react-router-dom";
 import service from "../../services/config.services";
-
+import { Spinner } from "react-bootstrap/esm";
 function GameDetails() {
   //tenemos que coegher use params para obtener la id del juego específico
-  const { id } = useParams();
+  //const { id } = useParams();
+  const params = useParams();
   const [gameDetails, setGameDetails] = useState({});
 
   useEffect(() => {
     service
       .get(`/game/${id}`)
       .then((response) => {
+        console.log(response.data);
         setGameDetails(response.data);
       })
       .catch((err) => {
-        console.log(err);
+        navigate("/error");
       });
   }, []);
 
+  if (games === null) {
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
+  }
   return (
     <>
       //!poner boton volver
