@@ -41,7 +41,7 @@ function Login() {
       if (error.response && error.response.status === 400) {
         setErrorMessage(error.response.data.errorMessage);
       }
-      //! aquí debería ir navegación a una página de error
+      navigate("/error");
     }
   };
 

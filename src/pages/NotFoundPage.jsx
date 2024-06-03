@@ -1,9 +1,44 @@
-import React from 'react'
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
-function NotFoundPage() {
+function ErrorPage() {
   return (
-    <div>NotFoundPage</div>
-  )
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+        textAlign: "center",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ marginRight: "20px" }}>
+          <h1>
+            Juego no encontrado, <br /> sigue jugando...
+          </h1>
+        </div>
+        <div>
+          <img
+            src="./images/not-found-logo.png"
+            style={{ height: "400px" }}
+            alt="error-logo"
+          />
+        </div>
+      </div>
+      <Link to="/games" style={{ marginTop: "20px" }}>
+        <Button variant="primary">Volver</Button>
+      </Link>
+    </div>
+  );
 }
 
-export default NotFoundPage
+export default ErrorPage;

@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import service from "../../services/config.services";
 import { Spinner } from "react-bootstrap/esm";
+
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+
 function GameDetails() {
-  //tenemos que coegher use params para obtener la id del juego específico
-  //const { id } = useParams();
-  const params = useParams();
-  const [gameDetails, setGameDetails] = useState({});
+  const { id } = useParams();
+  const [gameDetails, setGameDetails] = useState(null);
+  const [comments, setComments] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     service
@@ -16,29 +20,91 @@ function GameDetails() {
         setGameDetails(response.data);
       })
       .catch((err) => {
+        console.log(err);
         navigate("/error");
       });
-  }, []);
+  }, [id, navigate]);
 
-  if (games === null) {
+  /*useEffect(() => {
+    service
+      .get(`/comment/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        setComments(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        navigate("/error");
+      });
+  }, [id, navigate]);*/
+
+  if (gameDetails === null) {
     return (
       <Spinner animation="border" role="status">
         <span className="visually-hidden">Loading...</span>
       </Spinner>
     );
   }
+
   return (
-    <>
-      //!poner boton volver
-      <div>GamesDetails</div>
-      <p>{game.image}</p>
-      <h2>{game.title}</h2>
-      <p>{game.description}</p>
-      <p>{game.designer}</p>
-      <p>{game.minPlayers}</p>
-      <p>{game.maxPlayers}</p>
-      <p>{game.playTime}</p>
-    </>
+    <div
+      className="d-flex flex-column align-items-center"
+      style={{ marginTop: "20px" }}
+    >
+      <Card style={{ width: "80%", maxWidth: "600px" }}>
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "50%" }}
+        ></div>
+        <Card.Body>
+          <Card.Title>
+            <h1>{gameDetails.title}</h1>
+          </Card.Title>
+          <Card.Img
+            variant="top"
+            src={gameDetails.image}
+            alt={gameDetails.title}
+            style={{
+              maxHeight: "50%",
+              maxWidth: "50%",
+              marginTop: "20px",
+              marginBottom: "20px",
+              objectFit: "contain",
+              display: "block",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          />
+          <Card.Text>
+            <p>{gameDetails.description}</p>
+            <p>
+              <strong>Designer:</strong> {gameDetails.designer}
+            </p>
+            <p>
+              <strong>Genre:</strong> {gameDetails.genre}
+            </p>
+            <p>
+              <strong>Max. players:</strong> {gameDetails.maxPlayers}
+            </p>
+            <p>
+              <strong>Min. players:</strong> {gameDetails.minPlayers}
+            </p>
+            <p>
+              <strong>Play time:</strong> {gameDetails.playTime}
+            </p>
+          </Card.Text>
+          <h3>Comments</h3>
+          <ul>
+            {comments.map((comment) => (
+              <li key={comment._id}>{comment.text}</li>
+            ))}
+          </ul>
+        </Card.Body>
+      </Card>
+      <Link to="/games" style={{ marginTop: "20px" }}>
+        <Button variant="primary">Volver</Button>
+      </Link>
+    </div>
   );
 }
 

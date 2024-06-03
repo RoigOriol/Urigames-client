@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function GameEdition() {
-  return (
-    <div>GameEdition</div>
-  )
+  return <div>GameEdition</div>;
 }
 
-export default GameEdition
+export default GameEdition;

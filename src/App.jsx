@@ -77,6 +77,9 @@ function App() {
           }
         />
       </Routes>
+
+      <div style={{ height: "100px" }}></div>
+
       <Footer />
     </div>
   );

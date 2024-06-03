@@ -28,7 +28,7 @@ function MyNavbar() {
     await authenticateUser(); // Esto va a forzar que el token sea valido y cambiar los estados
 
     // 3. Redireccionar al usuario a algún lugar público
-    navigate("/login");
+    navigate("/games");
   };
 
   return (
@@ -60,24 +60,30 @@ function MyNavbar() {
           >
             {isLoggedIn && (
               <>
-                <Nav.Link as={Link} to="games">
+                <Nav.Link as={Link} to="games" className="mx-auto">
                   Listado de juegos
                 </Nav.Link>
-                <Nav.Link as={Link} to={`/user/${loggedUserId}`}>
+                <Nav.Link
+                  as={Link}
+                  to={`/user/${loggedUserId}`}
+                  className="ms-auto"
+                >
                   Perfil
                 </Nav.Link>
-                <Nav.Link onClick={handleLogout}>Cerrar sesión</Nav.Link>
+                <Nav.Link onClick={handleLogout} className="ms-auto">
+                  Cerrar sesión
+                </Nav.Link>
               </>
             )}
-            {isAdmin && <Nav.Link disabled>Eres administrador</Nav.Link>}
+            {isAdmin && <Nav.Link enabled>Eres administrador</Nav.Link>}
           </Nav>
           <Nav className="ms-auto">
             {!isLoggedIn && (
               <>
-                <Nav.Link as={Link} to="/login">
+                <Nav.Link as={Link} to="/login" className="ms-auto">
                   Login
                 </Nav.Link>
-                <Nav.Link as={Link} to="/signup">
+                <Nav.Link as={Link} to="/signup" className="ms-auto">
                   Signup
                 </Nav.Link>
               </>

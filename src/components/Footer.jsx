@@ -6,7 +6,11 @@ import { useContext } from "react";
 import { themeContext } from "../context/theme.context";
 
 function Footer() {
-  const { isDarkTheme } = useContext(themeContext);
+  const { isDarkTheme, handleToggleTheme } = useContext(themeContext);
+
+  const handleSwitch = () => {
+    handleToggleTheme();
+  };
 
   return (
     <div

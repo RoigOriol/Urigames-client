@@ -8,10 +8,12 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import { Row } from "react-bootstrap";
 import { Spinner } from "react-bootstrap/esm";
+
 function GameList() {
   const [games, setGames] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState("");
 
+  //!REVISAR POR QUE LA RUTA DEL SERVER NO ESTA BIEN
   const navigate = useNavigate();
   // useEffect para llamar a la API, utulizamos service pk ya esta definido como axios en services
   useEffect(() => {
@@ -52,7 +54,7 @@ function GameList() {
           onChange={handleGenreChange}
           value={selectedGenre}
         >
-          <option value="">Todos los juegos</option>
+          <option value="">Juegos por género</option>
           {games &&
             games.map((game, index) => (
               <option key={index} value={game.genre}>

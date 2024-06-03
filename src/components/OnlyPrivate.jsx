@@ -9,6 +9,7 @@ function OnlyPrivate(props) {
 
   if (isLoggedIn) {
     // si el usuario está logeado, renderiza props.children
+    <Navigate to="/games" />;
     return props.children;
   } else {
     // si no está logeado, redirecciona
