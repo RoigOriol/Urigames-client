@@ -1,7 +1,12 @@
 import React from "react";
+import React, { useState } from "react";
 
 function FormComments() {
-  return <div>FormComments</div>;
+  return (
+    <div>
+      <h5>Add Comment</h5>
+    </div>
+  );
 }
 
 export default FormComments;

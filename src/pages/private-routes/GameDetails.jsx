@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import service from "../../services/config.services";
-import { Spinner } from "react-bootstrap/esm";
+import { Spinner } from "react-bootstrap";
+//import FormComments from "../components/FormComments";
 
+//import Comment from "../components/Comment";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
 function GameDetails() {
   const { id } = useParams();
   const [gameDetails, setGameDetails] = useState(null);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +27,7 @@ function GameDetails() {
       });
   }, [id, navigate]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     service
       .get(`/comment/${id}`)
       .then((response) => {
@@ -36,8 +38,8 @@ function GameDetails() {
         console.log(err);
         navigate("/error");
       });
-  }, [id, navigate]);*/
-
+  }, [id, navigate]);
+  console.log(comments);
   if (gameDetails === null) {
     return (
       <Spinner animation="border" role="status">
@@ -96,8 +98,14 @@ function GameDetails() {
           <h3>Comments</h3>
           <ul>
             {comments.map((comment) => (
-              <li key={comment._id}>{comment.text}</li>
-            ))}
+              <li key={comment._id}>
+                <Comment comment={comment} />
+              </li>
+            ))}{" "}
+            //!COMPROBAR
+            <p>
+              gameId={id} getData={() => {}}
+            </p>
           </ul>
         </Card.Body>
       </Card>

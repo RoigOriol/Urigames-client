@@ -14,8 +14,19 @@ function Footer() {
 
   return (
     <div
-      className="footer"
-      bg={isDarkTheme ? "dark" : "light"}
+      className="bg-body-tertiary"
+      style={{
+        maxHeight: "100px",
+        position: "fixed",
+        bottom: 0,
+        width: "100%",
+        height: "60px",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "0 20px",
+        backgroundColor: isDarkTheme ? "dark" : "light",
+      }}
       data-bs-theme={isDarkTheme ? "dark" : "light"}
     >
       <Link to="https://github.com/RoigOriol/Urigames-client" target="_blank">

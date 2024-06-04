@@ -13,7 +13,6 @@ function GameList() {
   const [games, setGames] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState("");
 
-  //!REVISAR POR QUE LA RUTA DEL SERVER NO ESTA BIEN
   const navigate = useNavigate();
   // useEffect para llamar a la API, utulizamos service pk ya esta definido como axios en services
   useEffect(() => {
@@ -39,6 +38,17 @@ function GameList() {
       ? games.filter((game) => game.genre === selectedGenre)
       : games;
 
+  /*const uniqueGenres = games ? [...new Set(games.map(game => game.genre))] : [];
+      Desglosemos esta línea:
+      games.map(game => game.genre): Esta parte del código crea un array con todos los géneros de los juegos.
+      new Set(...): El Set se utiliza para eliminar los valores duplicados del array de géneros.
+      [...new Set(...)]: El operador de propagación ... se usa para convertir el Set de nuevo en un array.
+      games ? ... : []: Esto asegura que si games es null o undefined, uniqueGenres será un array vacío, evitando errores.*/
+
+  const uniqueGenres = games
+    ? [...new Set(games.map((game) => game.genre))]
+    : [];
+
   if (games === null) {
     return (
       <Spinner animation="border" role="status">
@@ -55,12 +65,11 @@ function GameList() {
           value={selectedGenre}
         >
           <option value="">Juegos por género</option>
-          {games &&
-            games.map((game, index) => (
-              <option key={index} value={game.genre}>
-                {game.genre}
-              </option>
-            ))}
+          {uniqueGenres.map((genre, index) => (
+            <option key={index} value={genre}>
+              {genre}
+            </option>
+          ))}
         </Form.Select>
 
         <Row>

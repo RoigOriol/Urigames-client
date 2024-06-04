@@ -1,6 +1,8 @@
 import React from "react";
 import CommentItem from "../components/CommentItem";
 
+//!REVISAR todo
+
 function Comment(props) {
   return (
     <div className="card-comments">

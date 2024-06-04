@@ -1,35 +1,37 @@
 import React, { useState } from "react";
-import axios from "axios";
+import service from "../../services/config.services";
+import { useNavigate } from "react-router-dom";
 
 function CommentItem(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [textareaInput, setTextareaInput] = useState(props.comment.comment);
-
+  const navigate = useNavigate();
   console.log(props.comment);
 
   const deleteComment = (id) => {
-    axios
-      .delete(`${import.meta.env.VITE_SERVER_URL}/chats/${id}`)
-      .then(() => {
-        props.getData();
+    service
+      .delete(`/comment/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        setComments(response.data);
       })
-      .catch((error) => {
-        console.log(error);
-      }, []);
+      .catch((err) => {
+        console.log(err);
+        navigate("/error");
+      });
   };
 
   const saveComment = (id) => {
-    axios
-      .patch(`${import.meta.env.VITE_SERVER_URL}/chats/${id}`, {
-        comment: textareaInput,
+    service
+      .patch(`/comment/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        setComments(response.data);
       })
-      .then(() => {
-        props.getData();
-        setIsEditing(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      }, []);
+      .catch((err) => {
+        console.log(err);
+        navigate("/error");
+      });
   };
 
   return (
