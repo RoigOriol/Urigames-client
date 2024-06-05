@@ -47,7 +47,7 @@ function GameCreation() {
       })
       .catch((error) => {
         console.log(error);
-        navigate("/games"); // vamos a la página de games
+        navigate("/error"); // vamos a la página de games
       });
 
     // Actualizamos los estados del formulario
@@ -140,7 +140,7 @@ function GameCreation() {
             {" "}
             <Link to={"/games"}>
               <Button variant="primary" type="submit">
-                Crea tu juego
+                Crear
               </Button>
             </Link>
           </div>
