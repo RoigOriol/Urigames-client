@@ -10,10 +10,22 @@ function Signup() {
   const [username, setUsername] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
-  const handleUsernameChange = (e) => setUsername(e.target.value);
+  // Función para manejar cambios en el campo de correo electrónico
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
+  // Función para manejar cambios en el campo de contraseña
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  // Función para manejar cambios en el campo de nombre de usuario
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  // Función para manejar el evento de registro
   const handleSignup = async (e) => {
     e.preventDefault();
     const newUser = {
@@ -23,13 +35,15 @@ function Signup() {
     };
 
     try {
-      // Hacemos las llamadas a nuestro servidor
+      // Hacemos las llamadas a nuestro servidor y esperamos la respuesta
       await service.post("/auth/signup", newUser).then((response) => {
-        navigate("/games");
+        console.log(response.data); // Información sobre el usuario registrado
+        navigate("/games"); // Redirige al usuario a la página de juegos después de registrarse
       });
     } catch (error) {
       if (error.response.status === 400) {
         setErrorMessage(error.response.data.errorMessage);
+        console.log(errorMessage); // Mensaje de error si la solicitud falla
       }
     }
   };

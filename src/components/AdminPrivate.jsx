@@ -3,7 +3,7 @@ import { AuthContext } from "../context/auth.context";
 import { Navigate } from "react-router-dom";
 import { useContext } from "react";
 
-function OnlyPrivate(props) {
+function AdminPrivate(props) {
   // estos components HOC solo se deben usar sobre paginas completas en App.jsx
   const { isAdmin } = useContext(AuthContext);
 
@@ -18,4 +18,4 @@ function OnlyPrivate(props) {
   }
 }
 
-export default OnlyPrivate;
+export default AdminPrivate;

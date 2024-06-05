@@ -4,17 +4,20 @@ import service from "../../services/config.services";
 import { Form, Col, Row, Spinner } from "react-bootstrap";
 
 function GameEdition(props) {
-  const { id } = useParams();
+  const { id } = useParams(); // Obtiene el parámetro de la URL
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  // y asi con todos los campos
+  // Define estados para otros campos
+  //! @TODO y asi con todos los campos
+
+  // Función para obtener los detalles del juego
 
   const fetchGameDetails = async () => {
     try {
-      const response = await service.get(`/game/${id}`);
-      setTitle(response.data.title);
-      setDescription(response.data.description);
+      const response = await service.get(`/game/${id}`); // Realiza una solicitud GET al servidor para obtener los detalles del juego
+      setTitle(response.data.title); // Actualiza el estado del título con los datos del juego
+      setDescription(response.data.description); // Actualiza el estado de la descripción con los datos del juego
 
       // asi para todos los campos
       setLoading(false);
@@ -22,7 +25,7 @@ function GameEdition(props) {
       console.log(error);
     }
   };
-
+  // Función para manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -42,7 +45,7 @@ function GameEdition(props) {
   };
 
   useEffect(() => {
-    fetchGameDetails();
+    fetchGameDetails(); // Obtiene los detalles del juego al montar el componente
   }, [id]);
 
   if (loading) {

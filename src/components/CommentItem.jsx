@@ -16,7 +16,7 @@ function CommentItem(props) {
       .then((response) => {
         console.log(response.data);
         // Actualizamos la lista de comentarios en el componente padre después de eliminar el comentario
-
+        //! volver a pedir al sistema todos los comentarios sin incluir el que acabo de borrar
         props.setData(props.comments.filter((comment) => comment._id !== id));
       })
       .catch((err) => {

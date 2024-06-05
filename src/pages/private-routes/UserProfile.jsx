@@ -9,28 +9,33 @@ import { Spinner } from "react-bootstrap/esm";
 
 //! FUNCION asincrona como game details
 function UserProfile() {
+  // Define el estado para almacenar los datos del usuario
   const [user, setUser] = useState(null);
+  // Define el estado para almacenar el usuario seleccionado (si es necesario)
   const [selectedUser, setSelectedUser] = useState("");
-  console.log(user);
+  console.log(user); // Registra los datos del usuario en la consola
+  // Obtiene la función de navegación de React Router
   const navigate = useNavigate();
 
+  // Efecto para obtener los datos del usuario cuando el componente se monta
   useEffect(() => {
     service
-      .get("/user")
+      .get("/user") // Realiza una solicitud GET al servidor para obtener los datos del usuario
       .then((response) => {
-        setUser(response.data);
+        setUser(response.data); // Actualiza el estado con los datos del usuario recibidos
       })
       .catch((error) => {
-        console.log(err);
-        navigate("/error");
+        console.log(err); // Registra cualquier error en la consola
+        navigate("/error"); // Redirige a la página de error en caso de error
       });
   }, []);
 
-  // gestionamos el tipo de juego
+  // Función para gestionar los cambios en el tipo de usuario seleccionado (si es necesario)
   const handleUserChange = (e) => {
     setSelectedUser(e.target.value);
   };
 
+  // Renderiza un spinner de carga si los datos del usuario aún no se han cargado
   if (user === null) {
     return (
       <Spinner animation="border" role="status">
@@ -43,6 +48,7 @@ function UserProfile() {
     <>
       <h1>UserProfile</h1>
 
+      {/* Formulario para editar los datos del usuario */}
       <Form>
         <Row className="mb-3">
           <Form.Group as={Col} controlId="formGridEmail">

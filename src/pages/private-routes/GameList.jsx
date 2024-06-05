@@ -10,16 +10,18 @@ import { Row } from "react-bootstrap";
 import { Spinner } from "react-bootstrap/esm";
 
 function GameList() {
+  // Define el estado para almacenar la lista de juegos y el género seleccionado
   const [games, setGames] = useState(null);
   const [selectedGenre, setSelectedGenre] = useState("");
 
   const navigate = useNavigate();
-  // useEffect para llamar a la API, utulizamos service pk ya esta definido como axios en services
+  // useEffect para llamar a la API, utilizamos service pk ya está definido como axios en services
+  // Efecto para obtener la lista de juegos cuando el componente se monta
   useEffect(() => {
     service
-      .get("/game")
+      .get("/game") // Realiza una solicitud GET al servidor para obtener la lista de juegos
       .then((response) => {
-        setGames(response.data);
+        setGames(response.data); // Actualiza el estado con la lista de juegos recibida
       })
       .catch((err) => {
         console.log(err);
@@ -27,17 +29,17 @@ function GameList() {
       });
   }, []);
 
-  // gestionamos el tipo de juego
+  // Función para gestionar los cambios en el género seleccionado
   const handleGenreChange = (e) => {
     setSelectedGenre(e.target.value);
   };
 
-  // Filtramos por género
+  // Filtramos por género los juegos
   const filteredGames =
     games && selectedGenre
       ? games.filter((game) => game.genre === selectedGenre)
       : games;
-
+  //!explicación de set
   /*const uniqueGenres = games ? [...new Set(games.map(game => game.genre))] : [];
       Desglosemos esta línea:
       games.map(game => game.genre): Esta parte del código crea un array con todos los géneros de los juegos.
