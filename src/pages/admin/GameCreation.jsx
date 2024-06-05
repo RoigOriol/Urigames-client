@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import service from "../../services/config.services";
 import { Link, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-
 import Col from "react-bootstrap/Col";
 import { Row } from "react-bootstrap";
 import { Spinner } from "react-bootstrap/esm";
+import { AuthContext } from "../../context/auth.context";
+import { themeContext } from "../../context/theme.context";
 
 function GameCreation() {
   const { authenticateUser, isLoggedIn, isAdmin, loggedUserId } =

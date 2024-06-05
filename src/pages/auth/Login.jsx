@@ -35,7 +35,7 @@ function Login() {
       authenticateUser();
 
       // redireccionar a una pagina privada
-      navigate("/games");
+      // navigate("/games");
     } catch (error) {
       console.log(error);
       if (error.response && error.response.status === 400) {

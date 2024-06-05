@@ -1,19 +1,23 @@
 import React, { useState } from "react";
-import service from "../../services/config.services";
+import service from "../services/config.services";
 import { useNavigate } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
 
+// props viene de comments
 function CommentItem(props) {
   const [isEditing, setIsEditing] = useState(false);
   const [textareaInput, setTextareaInput] = useState(props.comment.comment);
   const navigate = useNavigate();
-  console.log(props.comment);
+  console.log(props.comment.comment);
 
   const deleteComment = (id) => {
     service
-      .delete(`/comment/${id}`)
+      .delete(`/comments/${id}`)
       .then((response) => {
         console.log(response.data);
-        setComments(response.data);
+        // Actualizamos la lista de comentarios en el componente padre después de eliminar el comentario
+
+        props.setData(props.comments.filter((comment) => comment._id !== id));
       })
       .catch((err) => {
         console.log(err);
@@ -23,10 +27,12 @@ function CommentItem(props) {
 
   const saveComment = (id) => {
     service
-      .patch(`/comment/${id}`)
+      .patch(`/comments/${id}`, { comment: textareaInput })
       .then((response) => {
         console.log(response.data);
-        setComments(response.data);
+        // Actualizamos la lista de comentarios en el componente padre después de editar el comentario
+        props.setData(response.data.comments);
+        setIsEditing(false);
       })
       .catch((err) => {
         console.log(err);
@@ -35,42 +41,59 @@ function CommentItem(props) {
   };
 
   return (
-    <div>
-      {!isEditing ? (
-        <p>{props.comment.comment}</p>
-      ) : (
-        <textarea
-          onChange={(e) => setTextareaInput(e.target.value)}
-          value={textareaInput}
-        />
-      )}
-      {!isEditing ? (
-        <button className="button-sinfondo" onClick={() => setIsEditing(true)}>
-          🖊️
-        </button>
-      ) : (
-        <>
-          <button
+    <Form>
+      <Form.Group className="mb-3" controlId="commentForm.ControlTextarea">
+        {!isEditing ? (
+          <>
+            {" "}
+            <p>{props.comment.comment}</p>
+            <p> {props.comment.user.username}</p>
+          </>
+        ) : (
+          <Form.Control
+            as="textarea"
+            rows={3}
+            onChange={(e) => setTextareaInput(e.target.value)}
+            value={textareaInput}
+          />
+        )}
+      </Form.Group>
+      <div>
+        {!isEditing ? (
+          <Button
+            variant="outline-primary"
             className="button-sinfondo"
-            onClick={() => saveComment(props.comment.id)}
+            onClick={() => setIsEditing(true)}
           >
-            💾
-          </button>
-          <button
-            className="button-sinfondo"
-            onClick={() => setIsEditing(false)}
-          >
-            ❌
-          </button>
-        </>
-      )}
-      <button
-        className="button-sinfondo"
-        onClick={() => deleteComment(props.comment.id)}
-      >
-        🗑️
-      </button>
-    </div>
+            🖊️
+          </Button>
+        ) : (
+          <>
+            <Button
+              variant="outline-primary"
+              className="button-sinfondo"
+              onClick={() => saveComment(props.comment._id)}
+            >
+              💾
+            </Button>
+            <Button
+              variant="outline-danger"
+              className="button-sinfondo"
+              onClick={() => setIsEditing(false)}
+            >
+              ❌
+            </Button>
+          </>
+        )}
+        <Button
+          variant="outline-danger"
+          className="button-sinfondo"
+          onClick={() => deleteComment(props.comment._id)}
+        >
+          🗑️
+        </Button>
+      </div>
+    </Form>
   );
 }
 

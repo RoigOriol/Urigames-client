@@ -9,11 +9,12 @@ import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import OnlyPrivate from "./components/OnlyPrivate";
+import AdminPrivate from "./components/AdminPrivate";
 import GameList from "./pages/private-routes/GameList";
 import GameDetails from "./pages/private-routes/GameDetails";
 import UserProfile from "./pages/private-routes/UserProfile";
-import GameCreation from "./pages/private-routes/GameCreation";
-import GameEdition from "./pages/private-routes/GameEdition";
+import GameCreation from "./pages/admin/GameCreation";
+import GameEdition from "./pages/admin/GameEdition";
 import { useContext } from "react";
 import { themeContext } from "./context/theme.context";
 
@@ -53,19 +54,19 @@ function App() {
           }
         />
         <Route
-          path="/games/:id/create"
+          path="/games/create"
           element={
-            <OnlyPrivate>
+            <AdminPrivate>
               <GameCreation />
-            </OnlyPrivate>
+            </AdminPrivate>
           }
         />
         <Route
           path="/games/:id/edit"
           element={
-            <OnlyPrivate>
+            <AdminPrivate>
               <GameEdition />
-            </OnlyPrivate>
+            </AdminPrivate>
           }
         />
         <Route

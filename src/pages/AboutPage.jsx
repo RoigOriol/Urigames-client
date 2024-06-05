@@ -14,9 +14,9 @@ function AboutPage() {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
-        padding: "20px", // Añade padding para asegurar que el contenido no esté pegado a los bordes en pantallas pequeñas
-        boxSizing: "border-box", // Incluye el padding en el cálculo del ancho y alto
-        flexDirection: "column", // Para que los elementos se apilen verticalmente
+        padding: "20px",
+        boxSizing: "border-box",
+        flexDirection: "column",
       }}
     >
       <img

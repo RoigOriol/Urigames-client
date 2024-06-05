@@ -7,19 +7,20 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { Spinner } from "react-bootstrap/esm";
 
+//! FUNCION asincrona como game details
 function UserProfile() {
   const [user, setUser] = useState(null);
-  const [selecteUser, setSelectedUser] = useState("");
-
+  const [selectedUser, setSelectedUser] = useState("");
+  console.log(user);
   const navigate = useNavigate();
-  // useEffect para llamar a la API, utulizamos service pk ya esta definido como axios en services
+
   useEffect(() => {
     service
       .get("/user")
       .then((response) => {
         setUser(response.data);
       })
-      .catch((err) => {
+      .catch((error) => {
         console.log(err);
         navigate("/error");
       });

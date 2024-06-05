@@ -70,12 +70,20 @@ function MyNavbar() {
                 >
                   Perfil
                 </Nav.Link>
-                <Nav.Link onClick={handleLogout} className="ms-auto">
-                  Cerrar sesión
+              </>
+            )}
+            {isAdmin && (
+              <>
+                <Nav.Link as={Link} to="games/create" className="mx-auto">
+                  Crear juego
                 </Nav.Link>
               </>
             )}
-            {isAdmin && <Nav.Link enabled>Eres administrador</Nav.Link>}
+            {isLoggedIn && (
+              <Nav.Link onClick={handleLogout} className="ms-auto">
+                Cerrar sesión
+              </Nav.Link>
+            )}
           </Nav>
           <Nav className="ms-auto">
             {!isLoggedIn && (

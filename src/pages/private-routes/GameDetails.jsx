@@ -1,45 +1,44 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import service from "../../services/config.services";
-import { Spinner } from "react-bootstrap";
-//import FormComments from "../components/FormComments";
-
-//import Comment from "../components/Comment";
+import { Nav, Spinner } from "react-bootstrap";
+import Comment from "../../components/Comment";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import FormComments from "../../components/FormComments";
+import { AuthContext } from "../../context/auth.context";
 
 function GameDetails() {
+  const { isAdmin } = useContext(AuthContext);
   const { id } = useParams();
   const [gameDetails, setGameDetails] = useState(null);
-  const [comments, setComments] = useState(null);
-  const navigate = useNavigate();
+  const [comments, setComments] = useState([]);
+
+  //! FUNCION asincrona hablado Jorge
+  const fetchComments = async () => {
+    try {
+      const response = await service.get(`/comments/game/${id}`);
+      console.log(response.data);
+      setComments(response.data.comments);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchGameDetails = async () => {
+    try {
+      const response = await service.get(`/game/${id}`);
+      setGameDetails(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    service
-      .get(`/game/${id}`)
-      .then((response) => {
-        console.log(response.data);
-        setGameDetails(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        navigate("/error");
-      });
-  }, [id, navigate]);
+    fetchGameDetails();
+    fetchComments();
+  }, [id]);
 
-  useEffect(() => {
-    service
-      .get(`/comment/${id}`)
-      .then((response) => {
-        console.log(response.data);
-        setComments(response.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        navigate("/error");
-      });
-  }, [id, navigate]);
-  console.log(comments);
   if (gameDetails === null) {
     return (
       <Spinner animation="border" role="status">
@@ -54,13 +53,14 @@ function GameDetails() {
       style={{ marginTop: "20px" }}
     >
       <Card style={{ width: "80%", maxWidth: "600px" }}>
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: "50%" }}
-        ></div>
         <Card.Body>
           <Card.Title>
             <h1>{gameDetails.title}</h1>
+            {isAdmin && (
+              <Nav.Link as={Link} to={`/games/${id}/edit`}>
+                <Button variant="primary ">Editar juego</Button>
+              </Nav.Link>
+            )}
           </Card.Title>
           <Card.Img
             variant="top"
@@ -77,36 +77,27 @@ function GameDetails() {
               marginRight: "auto",
             }}
           />
+
+          <Card.Text>{gameDetails.description}</Card.Text>
           <Card.Text>
-            <p>{gameDetails.description}</p>
-            <p>
-              <strong>Designer:</strong> {gameDetails.designer}
-            </p>
-            <p>
-              <strong>Genre:</strong> {gameDetails.genre}
-            </p>
-            <p>
-              <strong>Max. players:</strong> {gameDetails.maxPlayers}
-            </p>
-            <p>
-              <strong>Min. players:</strong> {gameDetails.minPlayers}
-            </p>
-            <p>
-              <strong>Play time:</strong> {gameDetails.playTime}
-            </p>
+            <strong>Designer:</strong> {gameDetails.designer}
+          </Card.Text>
+          <Card.Text>
+            <strong>Genre:</strong> {gameDetails.genre}
+          </Card.Text>
+          <Card.Text>
+            <strong>Max. players:</strong> {gameDetails.maxPlayers}
+          </Card.Text>
+          <Card.Text>
+            <strong>Min. players:</strong> {gameDetails.minPlayers}
+          </Card.Text>
+          <Card.Text>
+            <strong>Play time:</strong> {gameDetails.playTime}
           </Card.Text>
           <h3>Comments</h3>
-          <ul>
-            {comments.map((comment) => (
-              <li key={comment._id}>
-                <Comment comment={comment} />
-              </li>
-            ))}{" "}
-            //!COMPROBAR
-            <p>
-              gameId={id} getData={() => {}}
-            </p>
-          </ul>
+
+          <Comment comments={comments} getData={fetchComments} />
+          <FormComments getData={fetchComments} id={id} />
         </Card.Body>
       </Card>
       <Link to="/games" style={{ marginTop: "20px" }}>
