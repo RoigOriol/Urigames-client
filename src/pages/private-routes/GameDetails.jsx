@@ -35,20 +35,19 @@ function GameDetails() {
     }
   };
 
-  const handleToggleCollectionGame = async () => {
+  const handleAddToCollection  = async () => {
     try {
-      const response = await service.path(`/game/${id}/collections`, {
-        isCollected: !gameCollectionList.isCollected,
-      });
-      setGameCollectionList(response.data);
-      ({
+      const response = await service.patch(`/user/${id}/collections`) 
+      
+      console.log(response)
+      
+     
+     // navigate("/games"); //! @TODO navegar a user profile?? games? mirar
 
-//  ...gameCollectionList, isCollected: !gameCollectionList.isCollected,
-      });
-      navigate("/games"); //! @TODO navegar a user profile?? games? mirar
+    
     } catch (error) {
-      console.log(error);
-      navigate("/error");
+      
+      //navigate("/error");
     }
   };
 
@@ -113,13 +112,11 @@ function GameDetails() {
             }}
           />
           <div>
-            <Button variant="light" onClick={handleToggleCollectionGame}>
-              {gameCollectionList.isCollected ? "❤️" : "🩶"}
+            <Button variant="light" onClick={handleAddToCollection}>
+           add
             </Button>
 
-            <Button variant="light" onClick={handleShow}>
-              🗑
-            </Button>
+          
           </div>
           <Card.Text>{gameDetails.description}</Card.Text>
           <Card.Text>
@@ -137,7 +134,7 @@ function GameDetails() {
           <Card.Text>
             <strong>Play time:</strong> {gameDetails.playTime} min.
           </Card.Text>
-          <h3>Comments</h3>
+          
           <Comment comments={comments} getData={fetchComments} />
           <FormComments getData={fetchComments} id={id} />
         </Card.Body>

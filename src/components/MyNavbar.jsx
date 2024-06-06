@@ -21,14 +21,9 @@ function MyNavbar() {
   };
 
   const handleLogout = async () => {
-    // 1. Remover el token de localstorage
-    localStorage.removeItem("authToken");
-
-    // 2. Cambiar los estados del contexto
-    await authenticateUser(); // Esto va a forzar que el token sea valido y cambiar los estados
-
-    // 3. Redireccionar al usuario a algún lugar público
-    navigate("/games");
+        localStorage.removeItem("authToken");
+      await authenticateUser(); 
+      navigate("/games");
   };
 
   return (
@@ -40,63 +35,52 @@ function MyNavbar() {
     >
       <Container fluid className="bg-body-tertiary">
         <Navbar.Brand as={Link} to="/">
-          <img src={logo} alt="logo" width={80} />
+          <img src={logo} alt="logo-web-img" width={80} />
         </Navbar.Brand>
-        <Form className="d-flex">
-          <Form.Control
-            type="search"
-            placeholder="Search"
-            className="me-2"
-            aria-label="Search"
-          />
-          <Button variant="outline-secondary">Search</Button>
-        </Form>
+       
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
-            navbarScroll
-          >
-            {isLoggedIn && (
-              <>
-                <Nav.Link as={Link} to="games" className="mx-auto">
-                  Listado de juegos
-                </Nav.Link>
-                <Nav.Link
-                  as={Link}
-                  to={`/user/${loggedUserId}`}
-                  className="ms-auto"
-                >
-                  Perfil
-                </Nav.Link>
-              </>
-            )}
-            {isAdmin && (
-              <>
-                <Nav.Link as={Link} to="games/create" className="mx-auto">
-                  Crear juego
-                </Nav.Link>
-              </>
-            )}
-            {isLoggedIn && (
-              <Nav.Link onClick={handleLogout} className="ms-auto">
-                Cerrar sesión
-              </Nav.Link>
-            )}
-          </Nav>
-          <Nav className="ms-auto">
-            {!isLoggedIn && (
-              <>
-                <Nav.Link as={Link} to="/login" className="ms-auto">
-                  Login
-                </Nav.Link>
-                <Nav.Link as={Link} to="/signup" className="ms-auto">
-                  Signup
-                </Nav.Link>
-              </>
-            )}
-          </Nav>
+        <Nav
+  className="me-auto my-2 my-lg-0"
+  style={{ maxHeight: "100px" }}
+  navbarScroll
+>
+  {isLoggedIn && (
+    <>
+      <Nav.Link as={Link} to="games" className="nav-item">
+        Listado de juegos
+      </Nav.Link>
+      <Nav.Link as={Link} to={`/user/${loggedUserId}`} className="nav-item">
+        Perfil
+      </Nav.Link>
+    </>
+  )}
+  {isAdmin && (
+    <>
+      <Nav.Link as={Link} to="games/create" className="nav-item">
+        Crear juego
+      </Nav.Link>
+    </>
+  )}
+  {isLoggedIn && (
+    <Nav.Link onClick={handleLogout} className="nav-item">
+      Cerrar sesión
+    </Nav.Link>
+  )}
+</Nav>
+<Nav className="ms-auto">
+  {!isLoggedIn && (
+    <>
+      <Nav.Link as={Link} to="/login" className="nav-item">
+        Login
+      </Nav.Link>
+      <Nav.Link as={Link} to="/signup" className="nav-item">
+        Signup
+      </Nav.Link>
+    </>
+  )}
+</Nav>
+
         </Navbar.Collapse>
       </Container>
       <div
@@ -104,6 +88,8 @@ function MyNavbar() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          margin: "20px 15px 15px 15px",
+        
         }}
       >
         ☀️

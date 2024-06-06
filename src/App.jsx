@@ -74,7 +74,8 @@ function App() {
         />
       </Routes>
 
-      <div style={{ height: "100px" }}></div>
+      <div style={{ height: "100px", backgroundColor: "transparent" }}></div>
+
 
       <Footer />
     </div>
