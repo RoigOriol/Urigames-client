@@ -2,7 +2,6 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #6c757d;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,7 +22,6 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: whitesmoke;
 }
 .footer {
   position: fixed;
@@ -50,9 +48,5 @@
 }
 
 .bg-body-tertiary {
-  background-color: whitesmoke;
-}
-
-.registration-form-container {
   background-color: whitesmoke;
 }

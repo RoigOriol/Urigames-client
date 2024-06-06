@@ -1,41 +1,34 @@
 import React, { useState, useEffect } from "react";
 import service from "../../services/config.services";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { Spinner } from "react-bootstrap/esm";
 
-//! FUNCION asincrona como game details
 function UserProfile() {
-  // Define el estado para almacenar los datos del usuario
-  const [user, setUser] = useState(null);
-  // Define el estado para almacenar el usuario seleccionado (si es necesario)
-  const [selectedUser, setSelectedUser] = useState("");
-  console.log(user); // Registra los datos del usuario en la consola
-  // Obtiene la función de navegación de React Router
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [user, setUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState("");
 
-  // Efecto para obtener los datos del usuario cuando el componente se monta
   useEffect(() => {
     service
-      .get("/user") // Realiza una solicitud GET al servidor para obtener los datos del usuario
+      .get(`/user/${id}`)
       .then((response) => {
-        setUser(response.data); // Actualiza el estado con los datos del usuario recibidos
+        setUser(response.data);
       })
       .catch((error) => {
-        console.log(err); // Registra cualquier error en la consola
-        navigate("/error"); // Redirige a la página de error en caso de error
+        console.log(err);
+        navigate("/error");
       });
   }, []);
 
-  // Función para gestionar los cambios en el tipo de usuario seleccionado (si es necesario)
   const handleUserChange = (e) => {
     setSelectedUser(e.target.value);
   };
 
-  // Renderiza un spinner de carga si los datos del usuario aún no se han cargado
   if (user === null) {
     return (
       <Spinner animation="border" role="status">
@@ -47,38 +40,38 @@ function UserProfile() {
   return (
     <>
       <h1>UserProfile</h1>
+      <p>nombre: {user.username}</p>
 
-      {/* Formulario para editar los datos del usuario */}
       <Form>
         <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridEmail">
+          <Form.Group as={Col}>
             <Form.Label>Email</Form.Label>
             <Form.Control type="email" placeholder="Enter email" />
           </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridPassword">
+          <Form.Group as={Col}>
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" />
           </Form.Group>
         </Row>
 
-        <Form.Group className="mb-3" controlId="formGridAddress1">
+        <Form.Group className="mb-3">
           <Form.Label>Address</Form.Label>
           <Form.Control placeholder="1234 Main St" />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formGridAddress2">
+        <Form.Group className="mb-3">
           <Form.Label>Address 2</Form.Label>
           <Form.Control placeholder="Apartment, studio, or floor" />
         </Form.Group>
 
         <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridCity">
+          <Form.Group as={Col}>
             <Form.Label>City</Form.Label>
             <Form.Control />
           </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridState">
+          <Form.Group as={Col}>
             <Form.Label>State</Form.Label>
             <Form.Select defaultValue="Choose...">
               <option>Choose...</option>
@@ -86,13 +79,13 @@ function UserProfile() {
             </Form.Select>
           </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridZip">
+          <Form.Group as={Col}>
             <Form.Label>Zip</Form.Label>
             <Form.Control />
           </Form.Group>
         </Row>
 
-        <Form.Group className="mb-3" id="formGridCheckbox">
+        <Form.Group className="mb-3">
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
 

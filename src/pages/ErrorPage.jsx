@@ -23,7 +23,7 @@ function ErrorPage() {
       >
         <div style={{ marginRight: "20px" }}>
           <h1>
-            Estás perdido, <br /> sigue jugando...
+            No cometas un error, <br /> sigue jugando...
           </h1>
         </div>
         <div>

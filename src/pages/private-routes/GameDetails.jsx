@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import service from "../../services/config.services";
 import { Nav, Spinner } from "react-bootstrap";
 import Comment from "../../components/Comment";
@@ -9,46 +9,64 @@ import FormComments from "../../components/FormComments";
 import { AuthContext } from "../../context/auth.context";
 
 function GameDetails() {
-  // Obtiene el estado de administrador del contexto de autenticación
+  const navigate = useNavigate();
   const { isAdmin } = useContext(AuthContext);
-  // Obtiene el ID del juego de los parámetros de la URL
   const { id } = useParams();
-  // Define el estado para almacenar los detalles del juego
   const [gameDetails, setGameDetails] = useState(null);
-  // Define el estado para almacenar los comentarios del juego
   const [comments, setComments] = useState([]);
+  const [gameCollectionList, setGameCollectionList] = useState();
 
-  //! FUNCION asincrona hablado Jorge
-  // Función asincrónica para obtener los comentarios del juego
   const fetchComments = async () => {
     try {
-      // Realiza una solicitud GET al servidor para obtener los comentarios del juego
       const response = await service.get(`/comments/game/${id}`);
-      console.log(response.data); // Registra los comentarios recibidos del servidor en la consola
-      setComments(response.data.comments); // Actualiza el estado de los comentarios con los comentarios recibidos
+      console.log(response.data);
+      setComments(response.data.comments);
     } catch (error) {
-      console.log(error); // Registra cualquier error en la consola
+      console.log(error);
     }
   };
 
-  // Función asincrónica para obtener los detalles del juego
   const fetchGameDetails = async () => {
     try {
-      // Realiza una solicitud GET al servidor para obtener los detalles del juego
       const response = await service.get(`/game/${id}`);
-      setGameDetails(response.data); // Actualiza el estado de los detalles del juego con los detalles recibidos
+      setGameDetails(response.data);
     } catch (error) {
-      console.log(error); // Registra cualquier error en la consola
+      console.log(error);
     }
   };
 
-  // Efecto para cargar los detalles del juego y los comentarios cuando el ID del juego cambia
+  const handleToggleCollectionGame = async () => {
+    try {
+      const response = await service.path(`/game/${id}/collections`, {
+        isCollected: !gameCollectionList.isCollected,
+      });
+      setGameCollectionList(response.data);
+      ({
+
+//  ...gameCollectionList, isCollected: !gameCollectionList.isCollected,
+      });
+      navigate("/games"); //! @TODO navegar a user profile?? games? mirar
+    } catch (error) {
+      console.log(error);
+      navigate("/error");
+    }
+  };
+
+  const handleDeleteGame = async () => {
+    try {
+      await service.delete(`/game/${id}`);
+      navigate("/games");
+    } catch (error) {
+      console.log(error);
+      navigate("/error");
+    }
+  };
+
   useEffect(() => {
-    fetchGameDetails(); // Llama a la función para obtener los detalles del juego
-    fetchComments(); // Llama a la función para obtener los comentarios del juego
+    fetchGameDetails();
+    fetchComments();
   }, [id]);
 
-  // Renderiza un spinner de carga si los detalles del juego aún no se han cargado
   if (gameDetails === null) {
     return (
       <Spinner animation="border" role="status">
@@ -66,12 +84,19 @@ function GameDetails() {
         <Card.Body>
           <Card.Title>
             <h1>{gameDetails.title}</h1>
-            {isAdmin && ( // Si el usuario es administrador, muestra un enlace para editar el juego
-              <Nav.Link as={Link} to={`/games/${id}/edit`}>
-                <Button variant="primary ">Editar juego</Button>
-              </Nav.Link>
-            )}
           </Card.Title>
+          {isAdmin && (
+            <>
+              <Nav.Link as={Link} to={`/games/${id}/edit`}>
+                <Button variant="success ">Editar juego</Button>
+              </Nav.Link>
+              <Nav.Link as={Link} to={`/games/${id}/edit`}>
+                <Button variant="danger" onClick={handleDeleteGame}>
+                  Eliminar juego
+                </Button>
+              </Nav.Link>
+            </>
+          )}
           <Card.Img
             variant="top"
             src={gameDetails.image}
@@ -87,7 +112,15 @@ function GameDetails() {
               marginRight: "auto",
             }}
           />
+          <div>
+            <Button variant="light" onClick={handleToggleCollectionGame}>
+              {gameCollectionList.isCollected ? "❤️" : "🩶"}
+            </Button>
 
+            <Button variant="light" onClick={handleShow}>
+              🗑
+            </Button>
+          </div>
           <Card.Text>{gameDetails.description}</Card.Text>
           <Card.Text>
             <strong>Designer:</strong> {gameDetails.designer}
@@ -102,16 +135,15 @@ function GameDetails() {
             <strong>Min. players:</strong> {gameDetails.minPlayers}
           </Card.Text>
           <Card.Text>
-            <strong>Play time:</strong> {gameDetails.playTime}
+            <strong>Play time:</strong> {gameDetails.playTime} min.
           </Card.Text>
           <h3>Comments</h3>
-
           <Comment comments={comments} getData={fetchComments} />
           <FormComments getData={fetchComments} id={id} />
         </Card.Body>
       </Card>
       <Link to="/games" style={{ marginTop: "20px" }}>
-        <Button variant="primary">Volver</Button>
+        <Button variant="secondary">Volver</Button>
       </Link>
     </div>
   );

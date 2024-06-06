@@ -15,8 +15,7 @@ function GameList() {
   const [selectedGenre, setSelectedGenre] = useState("");
 
   const navigate = useNavigate();
-  // useEffect para llamar a la API, utilizamos service pk ya está definido como axios en services
-  // Efecto para obtener la lista de juegos cuando el componente se monta
+
   useEffect(() => {
     service
       .get("/game") // Realiza una solicitud GET al servidor para obtener la lista de juegos
@@ -29,23 +28,14 @@ function GameList() {
       });
   }, []);
 
-  // Función para gestionar los cambios en el género seleccionado
   const handleGenreChange = (e) => {
     setSelectedGenre(e.target.value);
   };
 
-  // Filtramos por género los juegos
   const filteredGames =
     games && selectedGenre
       ? games.filter((game) => game.genre === selectedGenre)
       : games;
-  //!explicación de set
-  /*const uniqueGenres = games ? [...new Set(games.map(game => game.genre))] : [];
-      Desglosemos esta línea:
-      games.map(game => game.genre): Esta parte del código crea un array con todos los géneros de los juegos.
-      new Set(...): El Set se utiliza para eliminar los valores duplicados del array de géneros.
-      [...new Set(...)]: El operador de propagación ... se usa para convertir el Set de nuevo en un array.
-      games ? ... : []: Esto asegura que si games es null o undefined, uniqueGenres será un array vacío, evitando errores.*/
 
   const uniqueGenres = games
     ? [...new Set(games.map((game) => game.genre))]

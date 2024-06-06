@@ -1,6 +1,6 @@
-import React, { useState, navigate, useContext } from "react";
+import React, { useState, useContext } from "react";
 import service from "../../services/config.services";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -20,13 +20,34 @@ function GameCreation() {
   const [maxPlayers, setMaxPlayers] = useState("");
   const [minPlayers, setMinPlayers] = useState("");
   const [playTime, setPlayTime] = useState("");
-  const [image, setImage] = useState("");
+  const [imageUrl, setImageUrl] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
   const { handleToggleTheme } = useContext(themeContext);
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Evita que el formulario se envíe automáticamente
+  const handleFileUpload = async (event) => {
+    if (!event.target.files[0]) {
+      return;
+    }
 
-    // Crea<mos el juego
+    setIsUploading(true);
+
+    const uploadData = new FormData();
+    uploadData.append("image", event.target.files[0]);
+
+    try {
+      const response = await service.post("/upload", uploadData);
+      console.log(response);
+      setImageUrl(response.data.imageUrl);
+
+      setIsUploading(false); // para detener la animación de carga
+    } catch (error) {
+      console.log(error);
+      navigate("/error");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const newGame = {
       title: title,
       designer: designer,
@@ -34,33 +55,28 @@ function GameCreation() {
       minPlayers: minPlayers,
       maxPlayers: maxPlayers,
       description: description,
-      image: image,
+      image: imageUrl,
       playTime: playTime,
     };
 
-    // Hacemos la pewtición al servidor
-    service
-      .post("/", newGame)
-      .then(() => {
-        console.log("Juego creado correctamente");
-        navigate("/games");
-      })
-      .catch((error) => {
-        console.log(error);
-        navigate("/error"); // vamos a la página de games
-      });
-
-    // Actualizamos los estados del formulario
+    
+    try {
+      await service.post("/game", newGame);
+      console.log("Juego creado correctamente");
+      navigate("/games");
+    } catch (error) {
+      console.log(error);
+      navigate("/error");
+    }
 
     setTitle("");
-    setImage("");
+    setImageUrl("");
     setDescription("");
     setDesigner("");
     setGenre("");
     setMaxPlayers("");
     setMinPlayers("");
     setPlayTime("");
-    //props.getData(); no se cecesita
   };
 
   return (
@@ -68,81 +84,96 @@ function GameCreation() {
       <div>
         <h2 className="text-center mb-4">Crea tu juego</h2>
         <Form onSubmit={handleSubmit}>
+          <div>
+            <label>Imagen: </label>
+            <input
+              type="file"
+              name="image"
+              onChange={handleFileUpload}
+              disabled={isUploading}
+            />
+          </div>
+
+          {isUploading ? <h3>... subiendo imagen</h3> : null}
+      
+          {imageUrl ? (
+            <div>
+              <img src={imageUrl} alt="img" width={200} />
+            </div>
+          ) : null}
+
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>Titulo</Form.Label>
+            <Form.Group as={Col}>
+              <Form.Label>Título</Form.Label>
               <Form.Control
-                type="String"
-                placeholder="Titulo"
+                type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
             </Form.Group>
           </Row>
 
-          <Form.Group className="mb-3" controlId="formGridAddress2">
+          <Form.Group className="mb-3">
             <Form.Label>Descripción</Form.Label>
             <Form.Control
-              type="String"
-              placeholder="Descripción"
+              type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formGridAddress2">
+          <Form.Group className="mb-3">
             <Form.Label>Diseñador@</Form.Label>
             <Form.Control
-              type="String"
-              placeholder="Diseñador@"
+              type="text"
               value={designer}
               onChange={(e) => setDesigner(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formGridAddress2">
+
+          <Form.Group className="mb-3">
             <Form.Label>Género</Form.Label>
             <Form.Control
-              type="String"
-              placeholder="Género"
+              type="text"
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
             />
           </Form.Group>
 
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridCity">
+            <Form.Group as={Col}>
               <Form.Label>Máx. jugadores</Form.Label>
               <Form.Control
-                type="Number"
-                placeholder="Máx. jugadores"
+                type="number"
                 value={maxPlayers}
                 onChange={(e) => setMaxPlayers(e.target.value)}
               />
             </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridState">
+            <Form.Group as={Col}>
               <Form.Label>Min. jugadores</Form.Label>
-              <Form.Control placeholder="Min. jugadores" />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridZip">
-              <Form.Label>Tiempo estimado de juego</Form.Label>
               <Form.Control
-                type="Number"
-                placeholder="Minutos"
+                type="number"
                 value={minPlayers}
                 onChange={(e) => setMinPlayers(e.target.value)}
+              />
+            </Form.Group>
+
+            <Form.Group as={Col}>
+              <Form.Label>Tiempo estimado de juego</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Minutos"
+                value={playTime}
+                onChange={(e) => setPlayTime(e.target.value)}
               />
             </Form.Group>
           </Row>
 
           <div className="text-center">
-            {" "}
-            <Link to={"/games"}>
-              <Button variant="primary" type="submit">
-                Crear
-              </Button>
-            </Link>
+            <Button variant="primary" type="submit">
+              Crear
+            </Button>
           </div>
         </Form>
       </div>

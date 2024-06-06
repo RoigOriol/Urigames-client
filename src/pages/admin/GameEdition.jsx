@@ -83,7 +83,6 @@ function GameEdition(props) {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridEmail">
               <Form.Label>Título</Form.Label>{" "}
-              {/* Se corrige el typo en Título */}
               <Form.Control
                 type="text"
                 value={title}
@@ -148,7 +147,6 @@ function GameEdition(props) {
           </Row>
 
           <div className="text-center">
-            {" "}
             <Button variant="primary" type="submit">
               Editar
             </Button>

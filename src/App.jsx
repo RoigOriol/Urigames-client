@@ -18,11 +18,6 @@ import GameEdition from "./pages/admin/GameEdition";
 import { useContext } from "react";
 import { themeContext } from "./context/theme.context";
 
-import { Cloudinary } from "@cloudinary/url-gen";
-import { auto } from "@cloudinary/url-gen/actions/resize";
-import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
-import { AdvancedImage } from "@cloudinary/react";
-
 function App() {
   const { isDarkTheme } = useContext(themeContext);
 
