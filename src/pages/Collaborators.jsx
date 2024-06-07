@@ -28,9 +28,9 @@ function Collaborators() {
         <img src="src/assets/images/xavi.png" alt="Xavi" />
       </div>
       <div className="item">
-        <h2>Jorge (Sr. Patata)</h2>
+        <h2>Jorge</h2>
         <img src="src/assets/images/jorge.png" alt="Jorge" />
-        <p>Como estrella invitada</p>
+        <h5 style={{ marginTop: '20px' }}>Como estrella invitada</h5>
       </div>
     </div>
   );
