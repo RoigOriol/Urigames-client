@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import service from "../services/config.services";
+import { Form  } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 function FormComments(props) {
   const [comment, setComment] = useState("");
@@ -25,19 +27,21 @@ function FormComments(props) {
 
   return (
     <div>
-      <h5>Add Comment</h5>
-      <form onSubmit={handleSubmit}>
-        <textarea
-          type="text"
-          name="comment"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-        <div></div>
-        <button type="submit">Submit</button>
-      </form>
+        <Form onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+          <Form.Label>Añade un bonito comentario</Form.Label>
+          <Form.Control 
+            as="textarea" 
+            rows={3} 
+            value={comment} 
+            onChange={(e) => setComment(e.target.value)} 
+            
+          />
+        </Form.Group>
+        <Button variant="secondary" type="submit">Submit</Button>
+      </Form>
     </div>
   );
+  
 }
-
 export default FormComments;

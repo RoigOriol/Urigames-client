@@ -14,7 +14,7 @@ function GameDetails() {
   const { id } = useParams();
   const [gameDetails, setGameDetails] = useState(null);
   const [comments, setComments] = useState([]);
-  const [gameCollectionList, setGameCollectionList] = useState();
+  const [isClicked, setIsClicked] = useState(false);
 
   const fetchComments = async () => {
     try {
@@ -35,18 +35,14 @@ function GameDetails() {
     }
   };
 
-  const handleAddToCollection  = async () => {
+  const handleAddToCollection = async () => {
     try {
-      const response = await service.patch(`/user/${id}/collections`) 
-      
-      console.log(response)
-      
-     
-     // navigate("/games"); //! @TODO navegar a user profile?? games? mirar
+      const response = await service.patch(`/user/${id}/collections`);
+      setIsClicked(!isClicked);
+      console.log(response);
 
-    
+      // navigate("/games"); //! @TODO navegar a user profile?? games? mirar
     } catch (error) {
-      
       //navigate("/error");
     }
   };
@@ -82,41 +78,79 @@ function GameDetails() {
       <Card style={{ width: "80%", maxWidth: "600px" }}>
         <Card.Body>
           <Card.Title>
-            <h1>{gameDetails.title}</h1>
+            <h2>{gameDetails.title}</h2>
           </Card.Title>
           {isAdmin && (
             <>
               <Nav.Link as={Link} to={`/games/${id}/edit`}>
-                <Button variant="success ">Editar juego</Button>
-              </Nav.Link>
-              <Nav.Link as={Link} to={`/games/${id}/edit`}>
-                <Button variant="danger" onClick={handleDeleteGame}>
-                  Eliminar juego
+                <Button
+                  style={{
+                   backgroundColor: "transparent",
+                   border: "0px",
+                   color: "#6c757d",
+                    paddingTop: "10px",
+                    cursor: "pointer",
+                  }}
+                >
+                  <p>✏️ Editar</p>
                 </Button>
               </Nav.Link>
+              <Button
+                onClick={handleDeleteGame}
+                style={{
+                  backgroundColor: "transparent",
+                   border: "0px",
+                   color: "#6c757d",
+                    cursor: "pointer",
+                }}
+              >
+               <p> ❌ Eliminar</p>
+              </Button>
             </>
           )}
-          <Card.Img
+        <Card.Img
             variant="top"
             src={gameDetails.image}
             alt={gameDetails.title}
             style={{
-              maxHeight: "50%",
-              maxWidth: "50%",
-              marginTop: "20px",
-              marginBottom: "20px",
-              objectFit: "contain",
-              display: "block",
-              marginLeft: "auto",
-              marginRight: "auto",
+              width: '100%', // Ancho de la imagen
+              height: 'auto', // Altura de la imagen
+              maxWidth: '400px', // Ancho máximo
+              maxHeight: '300px', // Altura máxima
+              marginTop: '10px',
+              marginBottom: '10px',
+              objectFit: 'contain',
+              display: 'block',
+              marginLeft: 'auto',
+              marginRight: 'auto',
             }}
           />
-          <div>
-            <Button variant="light" onClick={handleAddToCollection}>
-           add
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Button
+              variant="light"
+              onClick={handleAddToCollection}
+              style={{
+                backgroundColor: "transparent",
+                color: "black", // Para el texto del botón, puedes ajustar según tu necesidad
+                border: "none",
+                cursor: "pointer",
+                margin: "20px 0",
+                padding: "10px 20px",
+              }}
+            >
+              {isClicked ? (
+                <span style={{ fontSize: "24px" }}> ❤️</span>
+              ) : (
+                <span style={{ fontSize: "24px" }}>🩶 </span>
+              )}{" "}
+              Añadir a favoritos
             </Button>
-
-          
           </div>
           <Card.Text>{gameDetails.description}</Card.Text>
           <Card.Text>
@@ -134,7 +168,7 @@ function GameDetails() {
           <Card.Text>
             <strong>Play time:</strong> {gameDetails.playTime} min.
           </Card.Text>
-          
+
           <Comment comments={comments} getData={fetchComments} />
           <FormComments getData={fetchComments} id={id} />
         </Card.Body>

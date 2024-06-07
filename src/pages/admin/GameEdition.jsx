@@ -4,9 +4,9 @@ import service from "../../services/config.services";
 import { Form, Col, Row, Spinner, Button } from "react-bootstrap"; // Se importa Button de react-bootstrap
 
 function GameEdition(props) {
-  const { id } = useParams(); // Obtiene el parámetro de la URL
-  const navigate = useNavigate(); // Se agrega useNavigate
-  const [loading, setLoading] = useState(true); // Para que la página se vaya recargando con los nuevos cambios
+  const { id } = useParams(); 
+  const navigate = useNavigate(); 
+  const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [designer, setDesigner] = useState("");
@@ -16,31 +16,29 @@ function GameEdition(props) {
   const [playTime, setPlayTime] = useState("");
   const [image, setImage] = useState("");
 
-  // Función para obtener los detalles del juego
-
-  // Realiza una solicitud GET al servidor para obtener los detalles del juego
+  
   const fetchGameDetails = async () => {
     try {
       const response = await service.get(`/game/${id}`);
-      // Actualizamos los nuevos estados con el texto que añade el admin
+      
 
       setTitle(response.data.title);
       setDescription(response.data.description);
       setImage(response.data.image);
-      setDesigner(response.data.designer); // Se corrige response.data.title por response.data.designer
+      setDesigner(response.data.designer);
       setGenre(response.data.genre);
       setMaxPlayers(response.data.maxPlayers);
-      setMinPlayers(response.data.minPlayers); // Se corrige response.data.setMinPlayers por response.data.minPlayers
+      setMinPlayers(response.data.minPlayers); 
       setPlayTime(response.data.playTime);
       setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
-  // Función para manejar el envío del formulario
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Editamos el juego
+   
     const editGame = {
       title: title,
       designer: designer,
@@ -64,7 +62,7 @@ function GameEdition(props) {
   };
 
   useEffect(() => {
-    fetchGameDetails(); // Obtiene los detalles del juego al montar el componente
+    fetchGameDetails(); 
   }, [id]);
 
   if (loading) {
@@ -81,7 +79,7 @@ function GameEdition(props) {
         <h2 className="text-center mb-4">Edita un juego</h2>
         <Form onSubmit={handleSubmit}>
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Group as={Col} >
               <Form.Label>Título</Form.Label>{" "}
               <Form.Control
                 type="text"
@@ -91,7 +89,7 @@ function GameEdition(props) {
             </Form.Group>
           </Row>
 
-          <Form.Group className="mb-3" controlId="formGridAddress2">
+          <Form.Group className="mb-3" >
             <Form.Label>Descripción</Form.Label>
             <Form.Control
               type="text"
@@ -100,7 +98,7 @@ function GameEdition(props) {
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="formGridAddress2">
+          <Form.Group className="mb-3" >
             <Form.Label>Diseñador@</Form.Label>
             <Form.Control
               type="text"
@@ -108,7 +106,7 @@ function GameEdition(props) {
               onChange={(e) => setDesigner(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formGridAddress2">
+          <Form.Group className="mb-3" >
             <Form.Label>Género</Form.Label>
             <Form.Control
               type="text"
@@ -118,36 +116,35 @@ function GameEdition(props) {
           </Form.Group>
 
           <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridCity">
-              <Form.Label>Máx. jugadores</Form.Label>
-              <Form.Control
-                type="number"
-                value={maxPlayers}
-                onChange={(e) => setMaxPlayers(e.target.value)}
-              />
-            </Form.Group>
+  <Col>
+    <Form.Label>Máx. jugadores</Form.Label>
+    <Form.Control
+      type="number"
+      value={maxPlayers}
+      onChange={(e) => setMaxPlayers(e.target.value)}
+    />
+  </Col>
 
-            <Form.Group as={Col} controlId="formGridState">
-              <Form.Label>Min. jugadores</Form.Label>
-              <Form.Control
-                type="number"
-                value={minPlayers}
-                onChange={(e) => setMinPlayers(e.target.value)}
-              />
-            </Form.Group>
+  <Col>
+    <Form.Label>Min. jugadores</Form.Label>
+    <Form.Control
+      type="number"
+      value={minPlayers}
+      onChange={(e) => setMinPlayers(e.target.value)}
+    />
+  </Col>
 
-            <Form.Group as={Col} controlId="formGridZip">
-              <Form.Label>Tiempo estimado de juego</Form.Label>
-              <Form.Control
-                type="number"
-                value={playTime}
-                onChange={(e) => setPlayTime(e.target.value)}
-              />
-            </Form.Group>
-          </Row>
-
+  <Col>
+    <Form.Label>Tiempo estimado de juego</Form.Label>
+    <Form.Control
+      type="number"
+      value={playTime}
+      onChange={(e) => setPlayTime(e.target.value)}
+    />
+  </Col>
+</Row>
           <div className="text-center">
-            <Button variant="primary" type="submit">
+            <Button variant="secondary" type="submit">
               Editar
             </Button>
           </div>

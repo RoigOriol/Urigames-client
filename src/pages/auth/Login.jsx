@@ -30,18 +30,16 @@ function Login() {
     try {
       const response = await service.post("/auth/login", userCredentials);
 
-      console.log(response);
-
       localStorage.setItem("authToken", response.data.authToken);
 
       authenticateUser();
-    } catch (error) {
-      console.log(error);
 
+      // Redirigir al usuario a la página "/games" después de autenticarse
+      navigate("/games"); 
+    } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage(error.response.data.errorMessage);
       }
-      navigate("/error");
     }
   };
 
@@ -50,13 +48,14 @@ function Login() {
       <div className="container mt-5">
         <h5>Formulario de Acceso</h5>
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-        <Form onSubmit={handleLogin}>
+        <Form noValidate onSubmit={handleLogin}>
           <Form.Group as={Row} className="mb-3" controlId="formEmail">
             <Form.Label column sm="2">
               Correo Electrónico:
             </Form.Label>
             <Col sm="10">
               <Form.Control
+              required
                 type="email"
                 name="email"
                 value={email}
@@ -71,6 +70,7 @@ function Login() {
             </Form.Label>
             <Col sm="10">
               <Form.Control
+               required
                 type="password"
                 name="password"
                 value={password}
@@ -79,7 +79,6 @@ function Login() {
               />
             </Col>
           </Form.Group>
-
           <Button variant="secondary" type="submit">
             Acceder
           </Button>

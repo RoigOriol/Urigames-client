@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 function ErrorPage() {
@@ -35,7 +35,7 @@ function ErrorPage() {
         </div>
       </div>
       <Link to="/games" style={{ marginTop: "20px" }}>
-        <Button variant="primary">Volver</Button>
+        <Button variant="secondary">Volver</Button>
       </Link>
     </div>
   );

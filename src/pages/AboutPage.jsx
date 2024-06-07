@@ -1,28 +1,25 @@
 import React from "react";
 import github from "../assets/images/logotipo-de-github.png";
 import Card from "react-bootstrap/Card";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { themeContext } from "../context/theme.context";
+import { useContext } from "react";
+import { Container } from "react-bootstrap";
 
 function AboutPage() {
-  const navigate = useNavigate();
-
+  const { isDarkTheme } = useContext(themeContext);
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        padding: "20px",
-        boxSizing: "border-box",
-        flexDirection: "column",
-      }}
-    >
+    <div className={isDarkTheme ? "darkTheme" : "lightTheme"}
+     >
+          <Container className="d-flex flex-column justify-content-center align-items-center vh-100">
       <img
         src="src/assets/images/about-logo.png"
-        style={{ width: "250px" }}
+        style={{ width: "200px",
+        marginBottom: "10px"
+         }}
         alt="about-logo"
+        
       />
       <Card
         style={{
@@ -30,10 +27,10 @@ function AboutPage() {
           width: "18rem",
           backgroundColor: "transparent",
           border: "none",
+          marginBottom: "10px"
         }}
       >
-        <Card.Body>
-          <Card.Title style={{ fontSize: "1.5rem", marginBottom: "10px" }}>
+       <Card.Title style={{ fontSize: "1.5rem", marginBottom: "10px" }}>
             Oriol
           </Card.Title>
           <Card.Text style={{ fontSize: "1rem", marginBottom: "20px" }}>
@@ -56,14 +53,15 @@ function AboutPage() {
               src={github}
               alt="GitHub"
               className="footer-image-left"
-              style={{ width: "24px", height: "24px" }}
+              style={{ width: "40px"}}
             />
           </a>
-        </Card.Body>
+       
       </Card>
       <Link to="/games" style={{ marginTop: "20px" }}>
-        <Button variant="primary">Todos los juegos</Button>
+        <Button variant="secondary">Todos los juegos</Button>
       </Link>
+      </Container>
     </div>
   );
 }

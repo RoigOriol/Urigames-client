@@ -15,6 +15,7 @@ import GameDetails from "./pages/private-routes/GameDetails";
 import UserProfile from "./pages/private-routes/UserProfile";
 import GameCreation from "./pages/admin/GameCreation";
 import GameEdition from "./pages/admin/GameEdition";
+import Collaborators from "./pages/Collaborators";
 import { useContext } from "react";
 import { themeContext } from "./context/theme.context";
 
@@ -32,6 +33,9 @@ function App() {
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/not-found" element={<NotFoundPage />} />
+        <Route path="/collaborators" element={<Collaborators />
+            
+          }/>
         <Route
           path="/games"
           element={
@@ -71,6 +75,8 @@ function App() {
               <UserProfile />
             </OnlyPrivate>
           }
+       
+
         />
       </Routes>
 

@@ -4,41 +4,26 @@ import Button from "react-bootstrap/Button";
 
 function ErrorPage() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-        textAlign: "center",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ marginRight: "20px" }}>
+    <div className="error-page">
+      <div className="error-content">
+        <div className="error-text">
           <h1>
             Juego no encontrado, <br /> sigue jugando...
           </h1>
         </div>
-        <div>
+        <div className="error-image">
           <img
             src="./images/not-found-logo.png"
-            style={{ height: "400px" }}
             alt="error-logo"
           />
         </div>
       </div>
-      <Link to="/games" style={{ marginTop: "20px" }}>
-        <Button variant="primary">Volver</Button>
+      <Link to="/games" className="error-link">
+        <Button variant="secondary">Volver</Button>
       </Link>
     </div>
   );
 }
+
 
 export default ErrorPage;

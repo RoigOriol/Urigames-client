@@ -38,12 +38,12 @@ function Signup() {
       // Hacemos las llamadas a nuestro servidor y esperamos la respuesta
       await service.post("/auth/signup", newUser).then((response) => {
         console.log(response.data); // Información sobre el usuario registrado
-        navigate("/games"); // Redirige al usuario a la página de juegos después de registrarse
+        navigate("/login"); // Redirige al usuario a la página de juegos después de registrarse
       });
     } catch (error) {
       if (error.response.status === 400) {
         setErrorMessage(error.response.data.errorMessage);
-        console.log(errorMessage); // Mensaje de error si la solicitud falla
+        console.log(errorMessage); 
       }
     }
   };

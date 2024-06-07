@@ -39,7 +39,7 @@ function GameCreation() {
       console.log(response);
       setImageUrl(response.data.imageUrl);
 
-      setIsUploading(false); // para detener la animación de carga
+      setIsUploading(false); 
     } catch (error) {
       console.log(error);
       navigate("/error");
@@ -85,7 +85,7 @@ function GameCreation() {
         <h2 className="text-center mb-4">Crea tu juego</h2>
         <Form onSubmit={handleSubmit}>
           <div>
-            <label>Imagen: </label>
+            <label>Imagen:    </label>
             <input
               type="file"
               name="image"
@@ -94,7 +94,7 @@ function GameCreation() {
             />
           </div>
 
-          {isUploading ? <h3>... subiendo imagen</h3> : null}
+          {isUploading ? <h2>... subiendo imagen</h2> : null}
       
           {imageUrl ? (
             <div>
@@ -171,7 +171,7 @@ function GameCreation() {
           </Row>
 
           <div className="text-center">
-            <Button variant="primary" type="submit">
+            <Button variant="secondary" type="submit">
               Crear
             </Button>
           </div>

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
@@ -52,6 +51,9 @@ function MyNavbar() {
       </Nav.Link>
       <Nav.Link as={Link} to={`/user/${loggedUserId}`} className="nav-item">
         Perfil
+      </Nav.Link>
+      <Nav.Link as={Link} to={"/collaborators"} className="nav-item">
+        Colaboradores
       </Nav.Link>
     </>
   )}

@@ -85,22 +85,24 @@ function GameList() {
                       src={game.image}
                       alt={game.title}
                       style={{
-                        maxHeight: "50%",
-                        maxWidth: "50%",
-                        marginTop: "10px",
+                                                maxWidth: "45%",
+                        marginTop: "20px",
                         objectFit: "contain",
                       }}
                     />
                   </div>
-                  <Card.Body>
+                  <Card.Body className="text-center">
                     <Card.Title>
-                      <h3>{game.title}</h3>
+                      <h3    style={{
+                       marginTop: "10px",
+                       
+                      }}>{game.title}</h3>
                     </Card.Title>
-                    <Card.Text>
+                    <Card.Text style={{ textAlign: 'left' }}>
                       <p>{game.description}</p>
                     </Card.Text>
                     <Link to={`/games/${game._id}`}>
-                      <Button variant="primary">Ficha del juego</Button>
+                      <Button variant="secondary">Ficha del juego</Button>
                     </Link>
                   </Card.Body>
                 </Card>
@@ -113,3 +115,5 @@ function GameList() {
 }
 
 export default GameList;
+
+
