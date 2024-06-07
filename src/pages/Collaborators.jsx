@@ -32,7 +32,7 @@ function Collaborators() {
         <img src="src/assets/images/jorge.png" alt="Jorge" />
         <h5 style={{ marginTop: '20px' }}>Como estrella invitada</h5>
       </div>
-    </div>
+    </div>  
   );
 }
 
