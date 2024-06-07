@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Col, Row, Alert } from "react-bootstrap";
+import { Form, Button, Col, Row, Alert} from "react-bootstrap";
 import { AuthContext } from "../../context/auth.context";
 import service from "../../services/config.services";
-
+import { Link } from "react-router-dom";
 function Login() {
   const { authenticateUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ function Login() {
       authenticateUser();
 
       // Redirigir al usuario a la página "/games" después de autenticarse
-      navigate("/games"); 
+      navigate("/games");
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage(error.response.data.errorMessage);
@@ -55,7 +55,7 @@ function Login() {
             </Form.Label>
             <Col sm="10">
               <Form.Control
-              required
+                required
                 type="email"
                 name="email"
                 value={email}
@@ -70,7 +70,7 @@ function Login() {
             </Form.Label>
             <Col sm="10">
               <Form.Control
-               required
+                required
                 type="password"
                 name="password"
                 value={password}
@@ -79,9 +79,11 @@ function Login() {
               />
             </Col>
           </Form.Group>
-          <Button variant="secondary" type="submit">
-            Acceder
-          </Button>
+          <Link to="/games">
+            <Button variant="secondary" type="submit">
+              Acceder
+            </Button>
+          </Link>
         </Form>
       </div>
     </div>

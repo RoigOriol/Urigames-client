@@ -6,13 +6,13 @@
 
 ## Descripción
 
-**NOTA -** UriGames es una base de datos de juegos de mesa donde puedes almacenar tus propios juegos.
+**NOTA -** UriGames es una base de datos de juegos de mesa donde puedes almacenar tus propios juegos, vrearlos y añadirlos a tu colecció de favoritos.
 #### [Repositorio del Clientee](https://github.com/RoigOriol/Urigames-client.git)
 #### [Repositorio del Servidor](https://github.com/RoigOriol/Urigames-server.git)
 
 ## Tecnologías y librerías 
 
-**NOTA -** Lista aquí todas las tecnologías utilizadas en el proyecto como HTML, CSS, Javascript, React, axios, Bootstrap y React-Bootstrap
+
 **Tecnologías**
 - HTML
 - CSS
@@ -104,65 +104,6 @@ La siguiente tabla describe las rutas configuradas en la aplicación, junto con 
 ## Comportamiento
 
 Cada ruta tiene un comportamiento específico, como la redirección a la página de inicio después de iniciar sesión o registrarse, o la expiración de la sesión del usuario después de cerrar sesión.
-
-
-
-
-
-
-
-
-  <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<NotFoundPage />} />
-        <Route path="/error" element={<ErrorPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/not-found" element={<NotFoundPage />} />
-        <Route path="/collaborators" element={<Collaborators />
-            
-          }/>
-        <Route
-          path="/games"
-          element={
-            <OnlyPrivate>
-              <GameList />
-            </OnlyPrivate>
-          }
-        />
-        <Route
-          path="/games/:id"
-          element={
-            <OnlyPrivate>
-              <GameDetails />
-            </OnlyPrivate>
-          }
-        />
-        <Route
-          path="/games/create"
-          element={
-            <AdminPrivate>
-              <GameCreation />
-            </AdminPrivate>
-          }
-        />
-        <Route
-          path="/games/:id/edit"
-          element={
-            <AdminPrivate>
-              <GameEdition />
-            </AdminPrivate>
-          }
-        />
-        <Route
-          path="/user/:id"
-          element={
-            <OnlyPrivate>
-              <UserProfile />
-            </OnlyPrivate>
-
-
-
 
 ## Other Components
 
