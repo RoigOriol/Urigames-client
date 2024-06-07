@@ -43,12 +43,12 @@ function MyNavbar() {
   className="me-auto my-2 my-lg-0"
   style={{ maxHeight: "100px" }}
   navbarScroll
->
-  {isLoggedIn && (
-    <>
-      <Nav.Link as={Link} to="games" className="nav-item">
+><Nav.Link as={Link} to="games" className="nav-item">
         Listado de juegos
       </Nav.Link>
+  {isLoggedIn && (
+    <>
+      
       <Nav.Link as={Link} to={`/user/${loggedUserId}`} className="nav-item">
         Perfil
       </Nav.Link>
