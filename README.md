@@ -48,15 +48,64 @@ Todas las acciones que un usuario puede realizar en la aplicación:
 
 ## React Router Routes (React App)
 
+# Rutas de la Aplicación
+
+La siguiente tabla describe las rutas configuradas en la aplicación, junto con las páginas, componentes, permisos y el comportamiento esperado.
+
 | Path                      | Page            | Components        | Permissions              | Behavior                                                      |
-| ------------------------- | ----------------| ----------------  | ------------------------ | ------------------------------------------------------------  |
-| `/`                       | Home            |                   | public                   | Home page                                                     |
-| `/signup`                 | Signup          |                   | anon only `<IsAnon>`     | Signup form, link to login, navigate to homepage after signup |
-| `/login`                  | Login           |                   | anon only `<IsAnon>`     | Login form, link to signup, navigate to homepage after login  |
-| `/profile`                | Profile         | EditProfile       | user only `<IsPrivate>`  | Navigate to homepage after logout, expire session             |
-| `/games/list`             | GameList        | AddGame, GameCard | user only `<IsPrivate>`  | Shows all films on backlog                                    |
-| `/games/edit`             | GamesEdit       |                   | user only `<IsPrivate>`  | Shows all games on backlog                                    |
-| `/games/favourites`       | FavouriteList   | GameCard          | user only `<IsPrivate>`  | Shows all games on backlog                                    |
+| ------------------------- | --------------- | ----------------- | ------------------------ | ------------------------------------------------------------  |
+| `/`                       | Home            |                   | Public                   | Home page                                                     |
+| `/signup`                 | Signup          |                   | Anon only `<IsAnon>`     | Signup form, link to login, navigate to homepage after signup |
+| `/login`                  | Login           |                   | Anon only `<IsAnon>`     | Login form, link to signup, navigate to homepage after login  |
+| `/profile`                | Profile         | EditProfile       | User only `<IsPrivate>`  | Navigate to homepage after logout, expire session             |
+| `/games/list`             | GameList        | AddGame, GameCard | User only `<IsPrivate>`  | Shows all films on backlog                                    |
+| `/games/edit`             | GamesEdit       |                   | User only `<IsPrivate>`  | Shows all games on backlog                                    |
+| `/games/favourites`       | FavouriteList   | GameCard          | User only `<IsPrivate>`  | Shows all games on backlog                                    |
+| `/login`                  | Login           |                   | Public                   | Login page                                                    |
+| `/signup`                 | Signup          |                   | Public                   | Signup page                                                   |
+| `*`                       | NotFoundPage    |                   | Public                   | 404 Not Found page                                            |
+| `/error`                  | ErrorPage       |                   | Public                   | Error page                                                    |
+| `/about`                  | AboutPage       |                   | Public                   | About page                                                    |
+| `/not-found`              | NotFoundPage    |                   | Public                   | 404 Not Found page                                            |
+| `/collaborators`          | Collaborators   |                   | Public                   | Collaborators page                                            |
+| `/games`                  | GameList        |                   | User only `<OnlyPrivate>`| Game list page                                                |
+| `/games/:id`              | GameDetails     |                   | User only `<OnlyPrivate>`| Game details page                                             |
+| `/games/create`           | GameCreation    |                   | Admin only `<AdminPrivate>`| Game creation page                                            |
+| `/games/:id/edit`         | GameEdition     |                   | Admin only `<AdminPrivate>`| Game edition page                                             |
+| `/user/:id`               | UserProfile     |                   | User only `<OnlyPrivate>`| User profile page                                             |
+
+## Permisos
+
+- **Public**: La página es accesible para cualquier usuario.
+- **Anon only `<IsAnon>`**: La página es accesible solo para usuarios no autenticados (anónimos).
+- **User only `<IsPrivate>`**: La página es accesible solo para usuarios autenticados.
+- **Admin only `<AdminPrivate>`**: La página es accesible solo para usuarios con permisos de administrador.
+
+## Componentes
+
+- **Home**: Componente de la página de inicio.
+- **Signup**: Componente del formulario de registro.
+- **Login**: Componente del formulario de inicio de sesión.
+- **EditProfile**: Componente para editar el perfil del usuario.
+- **GameList**: Componente que muestra la lista de juegos.
+- **AddGame**: Componente para agregar un nuevo juego.
+- **GameCard**: Componente que muestra información resumida de un juego.
+- **GamesEdit**: Componente para editar juegos.
+- **FavouriteList**: Componente que muestra la lista de juegos favoritos.
+- **NotFoundPage**: Componente que muestra la página de error 404.
+- **ErrorPage**: Componente que muestra la página de error general.
+- **AboutPage**: Componente que muestra información sobre la aplicación.
+- **Collaborators**: Componente que muestra la lista de colaboradores.
+- **GameDetails**: Componente que muestra los detalles de un juego específico.
+- **GameCreation**: Componente para la creación de un nuevo juego.
+- **GameEdition**: Componente para la edición de un juego existente.
+- **UserProfile**: Componente que muestra el perfil del usuario.
+
+## Comportamiento
+
+Cada ruta tiene un comportamiento específico, como la redirección a la página de inicio después de iniciar sesión o registrarse, o la expiración de la sesión del usuario después de cerrar sesión.
+
+
 
 
 
